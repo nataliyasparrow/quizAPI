@@ -1,0 +1,23 @@
+content = { 'question': '1+1=', 'answers': [{'content': '3','is_correct': False},{'content': '2','is_correct': False},{'content': '10','is_correct': True},]}
+Question.objects.create(category=c, content = { 'question': '2+2=', 'correct_answer': 2, 'answers': ['2', '4','10'],})
+Question.objects.create(category=c, content = { 'question': '2*2=', 'correct_answer': 1, 'answers': ['8', '4','22'],})
+Question.objects.create(category=c, content = { 'question': '2/2=', 'correct_answer': 0, 'answers': ['1', '2','22'],})
+
+c = Category.objects.get(id = 3)
+
+Question.objects.create(category=c, content = { 'question': 'Art movement characterized by relatively small, thin, yet visible brush strokes, open composition, emphasis on accurate depiction of light in its changing qualities (often accentuating the effects of the passage of time), ordinary subject matter, inclusion of movement as a crucial element of human perception and experience, and unusual visual angles', 'correct_answer': 1, 'answers': ['Cubism', 'Impressionism','Expressionism'],})
+Question.objects.create(category=c, content = { 'question': '2/2=', 'correct_answer': 0, 'answers': ['1', '2','22'],})
+Question.objects.create(category=c, content = { 'question': '2/2=', 'correct_answer': 0, 'answers': ['1', '2','22'],})
+
+
+
+Category.objects.create(title="Math")
+Category.objects.create(title="CS")
+Category.objects.create(title="Art")
+
+Quiz.objects.create(title="Math Quiz #1", category=Category.objects.get(id=1), questions={'questions_list':[{'text': '1+1=', 'correct_answer': 0, 'answers': ['10', '2','11']}, {'text': '2*2=', 'correct_answer': 1, 'answers': ['2', '4','22']}, {'text': '2/2=', 'correct_answer': 2, 'answers': ['4', '2','1']}]})
+
+
+current_quiz.questions.add(Question.objects.get(id=1))
+current_quiz.questions.add(Question.objects.get(id=2))
+current_quiz.questions.add(Question.objects.get(id=3))

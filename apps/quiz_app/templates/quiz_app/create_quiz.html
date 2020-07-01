@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quiz App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tv_show_app/css/style.css' %}">    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="center container">
+            <h2>Add a new quiz here!</h2><br>            
+            <form class="form-group" action="/create" method="POST">
+                {% csrf_token %}
+
+                <label for="category">Category:</label>
+                <select class="form-control" name="category">
+                    {% for c in all_categories %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                    {%endfor%}
+                </select><br>
+
+                <label for="content">Question</label>
+                <textarea class="form-control" name='content'></textarea><br>
+
+                <label for="answer1">Answer:</label>
+                <textarea class="form-control" name='answer1'></textarea><br>
+                <label for="answer2">Answer:</label>
+                <textarea class="form-control" name='answer2'></textarea><br>
+                <label for="answer3">Answer:</label>
+                <textarea class="form-control" name='answer3'></textarea><br>
+
+
+                <button type="submit" class="btn btn-light">Submit</button><br>
+                <a href="/">Cancel</a>
+            </form><br>
+            <hr>
+    </div>
+</body>
+</html>

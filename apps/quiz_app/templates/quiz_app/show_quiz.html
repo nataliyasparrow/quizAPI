@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quiz App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="center container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Quiz App</a>
+        </nav>
+        <hr>
+        <h2>This is {{quiz.title}}</h2><br>
+        <hr>
+        <div class="col">
+            <form class="form-group" action="/submit_quiz" method="post">
+                {% csrf_token %}
+                <input type='hidden' name='quiz_id' value='{{quiz.id}}' />
+                {% for q in questions %}
+                <div class = "block">
+                        <h5>Question: {{q.content.question}}</h5><br>
+                        <div class="radio radio-sm">
+                            {% for a in q.content.answers %}
+                                <label id="radio_label"><input id="radio_input" type="radio" name="{{q.id}}" value="{{a}}" style="padding-top: 2px;">{{a}}</label><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <input type="submit" class="btn btn-light btn-block" value="Submit">
+            </form>
+            <hr>
+        </div>
+    </div>    
+</body>
+</html>

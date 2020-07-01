@@ -1,0 +1,11 @@
+{% extends "quiz_app/select_quiz.html" %}
+{% block select_quiz %}
+<hr>
+<div class="list-group">
+        {% for q in quizes %}
+            <a href="#" class="list-group-item list-group-item-action list-group-item-light">
+                {{q.title}}
+            </a>   
+        {%endfor%}
+</div>
+{% endblock %}
