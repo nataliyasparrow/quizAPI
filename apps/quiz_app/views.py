@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from .models import Category, Question, Quiz
 from .serializers import CategorySerializer,  QuestionSerializer,  QuizSerializer
 # from rest_framework import viewsets
@@ -9,15 +10,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
-
-######## Pagination ######
-
-class ResultsSetPagination(PageNumberPagination):
-    page_size = 5
-    page_size_query_param = 'page_size'
-    max_page_size = 10
-
-
 
 ###### Category #######
 
@@ -114,21 +106,51 @@ class QuestionDetail(APIView):
 
 class QuizList(APIView):
     # List of all quizes
+    pagination_class = PageNumberPagination
+
     def get(self, request, format=None):
-        quizes = Quiz.objects.all()
-        # sr = QuizSerializer(quizes, many=True)
+        quizes = Quiz.objects.all().order_by("title")
+        sr = QuizSerializer(quizes, many=True)
 
         # filter_backends = [DjangoFilterBackend]
         # filterset_fields = ['category']
 
-        paginator = ResultsSetPagination()
-        result_page = paginator.paginate_queryset(quizes, request)
+        # paginator = ResultsSetPagination()
+        result_page = self.paginate_queryset(quizes)
 
+        # sr = QuizSerializer(quizes, many=True)
         sr = QuizSerializer(result_page, many=True)
 
         # pagination_class = ResultsSetPagination()
-        
-        return Response(sr.data)
+        return self.get_paginated_response(sr.data)
+        # return Response(sr.data)
+    
+    @property
+    def paginator(self):
+        """
+        The paginator instance associated with the view, or `None`.
+        """
+        if not hasattr(self, '_paginator'):
+            if self.pagination_class is None:
+                self._paginator = None
+            else:
+                self._paginator = self.pagination_class()
+        return self._paginator
+
+    def paginate_queryset(self, queryset):
+        """
+        Return a single page of results, or `None` if pagination is disabled.
+        """
+        if self.paginator is None:
+            return None
+        return self.paginator.paginate_queryset(queryset, self.request, view=self)
+
+    def get_paginated_response(self, data):
+        """
+        Return a paginated style `Response` object for the given output data.
+        """
+        assert self.paginator is not None
+        return self.paginator.get_paginated_response(data)
 
     # Create new quiz
     def post(self, request, format=None):
