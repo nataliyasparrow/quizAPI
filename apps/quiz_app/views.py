@@ -1,14 +1,25 @@
 from .models import Category, Question, Quiz
 from .serializers import CategorySerializer,  QuestionSerializer,  QuizSerializer
+# from rest_framework import viewsets
+
 from django.http import Http404
 from rest_framework.views import APIView
 # from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
+######## Pagination ######
 
-####### Category #######
+class ResultsSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
+
+
+###### Category #######
 
 class CategoryList(APIView):
     # List of all categories
@@ -105,10 +116,17 @@ class QuizList(APIView):
     # List of all quizes
     def get(self, request, format=None):
         quizes = Quiz.objects.all()
-        sr = QuizSerializer(quizes, many=True)
+        # sr = QuizSerializer(quizes, many=True)
 
-        filter_backends = [DjangoFilterBackend]
-        filterset_fields = ['category']
+        # filter_backends = [DjangoFilterBackend]
+        # filterset_fields = ['category']
+
+        paginator = ResultsSetPagination()
+        result_page = paginator.paginate_queryset(quizes, request)
+
+        sr = QuizSerializer(result_page, many=True)
+
+        # pagination_class = ResultsSetPagination()
         
         return Response(sr.data)
 
@@ -147,5 +165,3 @@ class QuizDetail(APIView):
         quiz = self.get_object(pk)
         quiz.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-

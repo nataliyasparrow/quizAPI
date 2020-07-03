@@ -15,7 +15,7 @@ Category.objects.create(title="Math")
 Category.objects.create(title="CS")
 Category.objects.create(title="Art")
 
-Quiz.objects.create(title="Math Quiz #1", category=Category.objects.get(id=1), questions={'questions_list':[{'text': '1+1=', 'correct_answer': 0, 'answers': ['10', '2','11']}, {'text': '2*2=', 'correct_answer': 1, 'answers': ['2', '4','22']}, {'text': '2/2=', 'correct_answer': 2, 'answers': ['4', '2','1']}]})
+Quiz.objects.create(title="Art Quiz #1", category=Category.objects.get(id=4), questions={'questions_list':[{'text': 'question number 1 text', 'correct_answer': 0, 'answers': ['10', '2','11']}, {'text': 'question number 2 text', 'correct_answer': 1, 'answers': ['2', '4','22']}, {'text': 'question number 3 text', 'correct_answer': 2, 'answers': ['4', '2','1']}]})
 
 
 current_quiz.questions.add(Question.objects.get(id=1))
