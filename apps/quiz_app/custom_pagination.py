@@ -3,32 +3,13 @@ from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 
-class PaginatedView(APIView):
+class CustomPaginator(PageNumberPagination):
+    page_size = 1
+    def generate_response(self, query_set, serializer_obj, request):
+        try:
+            page_data = self.paginate_queryset(query_set, request)
+        except NotFoundError:
+            return Response({"error": "No results found for the requested page"}, status=status.HTTP_400_BAD_REQUEST)
 
-    pagination_class = PageNumberPagination
-    @property
-    def paginator(self):
-        """
-        The paginator instance associated with the view, or `None`.
-        """
-        if not hasattr(self, '_paginator'):
-            if self.pagination_class is None:
-                self._paginator = None
-            else:
-                self._paginator = self.pagination_class()
-        return self._paginator
-
-    def paginate_queryset(self, queryset):
-        """
-        Return a single page of results, or `None` if pagination is disabled.
-        """
-        if self.paginator is None:
-            return None
-        return self.paginator.paginate_queryset(queryset, self.request, view=self)
-
-    def get_paginated_response(self, data):
-        """
-        Return a paginated style `Response` object for the given output data.
-        """
-        assert self.paginator is not None
-        return self.paginator.get_paginated_response(data)
+        serialized_page = serializer_obj(page_data, many=True)
+        return self.get_paginated_response(serialized_page.data)

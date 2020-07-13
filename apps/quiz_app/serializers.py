@@ -12,14 +12,17 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
     # id = serializers.IntegerField(read_only=True)
     # title = serializers.CharField(required=True, max_length=100)
+    category = serializers.ReadOnlyField(source='category.title')
     class Meta:
         model = Question
-        fields = ['id', 'content', 'category']
+        fields = ['id', 'category', 'content']
 
 class QuizSerializer(serializers.HyperlinkedModelSerializer):
     # id = serializers.IntegerField(read_only=True)
     # title = serializers.CharField(required=True, max_length=100)
     category = serializers.ReadOnlyField(source='category.title')
+    # questions = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    questions = QuestionSerializer(many=True, read_only=True)
     class Meta:
         model = Quiz
         fields = ['id', 'title', 'category', 'timed', 'questions']

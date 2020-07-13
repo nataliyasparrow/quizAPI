@@ -23,7 +23,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __repr__(self):
-        return f"<Question object: {self.content.question} ({self.id})>"
+        return f"<Question object: {self.id}>"
 
 
 class Quiz(models.Model):
@@ -31,8 +31,8 @@ class Quiz(models.Model):
     # difficulty = models.IntegerField()
     timed = models.BooleanField(default="False")
     category = models.ForeignKey(Category, related_name="quizes", on_delete=models.CASCADE)
-    # questions = models.ManyToManyField(Question, related_name="quizes")
-    questions = JSONField()
+    questions = models.ManyToManyField(Question, related_name="quizes")
+    # questions = JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __repr__(self):

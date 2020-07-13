@@ -1,7 +1,7 @@
 content = { 'question': '1+1=', 'answers': [{'content': '3','is_correct': False},{'content': '2','is_correct': False},{'content': '10','is_correct': True},]}
-Question.objects.create(category=c, content = { 'question': '2+2=', 'correct_answer': 2, 'answers': ['2', '4','10'],})
-Question.objects.create(category=c, content = { 'question': '2*2=', 'correct_answer': 1, 'answers': ['8', '4','22'],})
-Question.objects.create(category=c, content = { 'question': '2/2=', 'correct_answer': 0, 'answers': ['1', '2','22'],})
+Question.objects.create(category=Category.objects.get(id=1), content = { 'question': '2+2=', 'correct_answer': 2, 'answers': ['2', '4','10']})
+Question.objects.create(category=Category.objects.get(id=1), content = { 'question': '2*2=', 'correct_answer': 1, 'answers': ['8', '4','22']})
+Question.objects.create(category=Category.objects.get(id=1), content = { 'question': '2/2=', 'correct_answer': 0, 'answers': ['1', '2','22']})
 
 c = Category.objects.get(id = 3)
 
@@ -9,6 +9,10 @@ Question.objects.create(category=c, content = { 'question': 'Art movement charac
 Question.objects.create(category=c, content = { 'question': '2/2=', 'correct_answer': 0, 'answers': ['1', '2','22'],})
 Question.objects.create(category=c, content = { 'question': '2/2=', 'correct_answer': 0, 'answers': ['1', '2','22'],})
 
+Question.objects.create(category=Category.objects.get(id=3), content = { 'question': 'Art movement characterized by relatively small, thin, yet visible brush strokes, open composition, emphasis on accurate depiction of light in its changing qualities (often accentuating the effects of the passage of time), ordinary subject matter, inclusion of movement as a crucial element of human perception and experience, and unusual visual angles', 'correct_answer': 1, 'answers': ['Cubism', 'Impressionism','Expressionism']})
+Question.objects.create(category=Category.objects.get(id=3), content = { 'question': 'Art question #2', 'correct_answer': 1, 'answers': ['First answer to Art Question #2', 'Second answer to Art Question #2','Third answer to Art Question #2']})
+Question.objects.create(category=Category.objects.get(id=3), content = { 'question': 'Art question #3', 'correct_answer': 0, 'answers': ['First answer to Art Question #3', 'Second answer to Art Question #3','Third answer to Art Question #3']})
+Question.objects.create(category=Category.objects.get(id=3), content = { 'question': 'Art question #4', 'correct_answer': 2, 'answers': ['First answer to Art Question #4', 'Second answer to Art Question #4','Third answer to Art Question #4']})
 
 
 Category.objects.create(title="Math")
@@ -17,7 +21,16 @@ Category.objects.create(title="Art")
 
 Quiz.objects.create(title="Art Quiz #1", category=Category.objects.get(id=4), questions={'questions_list':[{'text': 'question number 1 text', 'correct_answer': 0, 'answers': ['10', '2','11']}, {'text': 'question number 2 text', 'correct_answer': 1, 'answers': ['2', '4','22']}, {'text': 'question number 3 text', 'correct_answer': 2, 'answers': ['4', '2','1']}]})
 
+Quiz.objects.create(title="Math Quiz #1", category=Category.objects.get(id=1))
+Quiz.objects.create(title="Art Quiz #1", category=Category.objects.get(id=3))
 
-current_quiz.questions.add(Question.objects.get(id=1))
-current_quiz.questions.add(Question.objects.get(id=2))
-current_quiz.questions.add(Question.objects.get(id=3))
+from apps.quiz_app.models import *
+m = Quiz.objects.get(id=1)
+m.questions.add(Question.objects.get(id=11))
+m.questions.add(Question.objects.get(id=12))
+m.questions.add(Question.objects.get(id=13))
+
+a.questions.add(Question.objects.get(id=14))
+a.questions.add(Question.objects.get(id=15))
+a.questions.add(Question.objects.get(id=16))
+a.questions.add(Question.objects.get(id=17))
