@@ -5,14 +5,14 @@ from .serializers import CategorySerializer,  QuestionSerializer,  QuizSerialize
 
 from django.http import Http404
 from rest_framework.views import APIView
-# from rest_framework import generics
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 # from rest_framework.pagination import PageNumberPagination
 # from django_filters.rest_framework import DjangoFilterBackend
-from django_filters import rest_framework as filters
+# from django_filters import rest_framework as filters
 from .custom_pagination import CustomPaginator
-
+from .filters import QuizFilter
 
 ###### Category #######
 
@@ -106,21 +106,23 @@ class QuestionDetail(APIView):
 
 
 ####### Quiz #######
-class QuizFilter(filters.FilterSet):
-    class Meta:
-        model = Quiz
-        fields = ['category']
+# class QuizFilter(filters.FilterSet):
+#     class Meta:
+#         model = Quiz
+#         fields = ['category']
 
 class QuizList(APIView):
     # List of all quizes
     paginator = CustomPaginator()
-    def get(self, request, format=None):
-        quizes = Quiz.objects.all().order_by("title")
-        sr = QuizSerializer(quizes, many=True)
 
-        filter_backends = [filters.DjangoFilterBackend]
-        filterset_class = QuizFilter
-        response = self.paginator.generate_response(quizes, QuizSerializer, request)
+    def get(self, request, format=None):
+        filtered_qiuzes = QuizFilter(request.GET, queryset = Quiz.objects.all()).qs
+        # sr = QuizSerializer(filtered_qiuzes, many=True)
+
+        # filter_backends = [filters.DjangoFilterBackend]
+        # filterset_class = QuizFilter
+        # quizes = Quiz.objects.all()
+        response = self.paginator.generate_response(filtered_qiuzes, QuizSerializer, request)
         return response
 
     # Create new quiz

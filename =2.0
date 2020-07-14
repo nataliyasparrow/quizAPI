@@ -1,0 +1,7 @@
+Collecting django-filter
+  Using cached https://files.pythonhosted.org/packages/35/94/e516d7f41adecb9fd280c89feceb98fa58f6966a583035c8016ed455c4e5/django_filter-2.3.0-py3-none-any.whl
+Requirement already satisfied: Django>=2.2 in c:\coding\coding_dojo\portfolio\django\djangopy3env\lib\site-packages (from django-filter) (2.2.4)
+Requirement already satisfied: sqlparse in c:\coding\coding_dojo\portfolio\django\djangopy3env\lib\site-packages (from Django>=2.2->django-filter) (0.3.1)
+Requirement already satisfied: pytz in c:\coding\coding_dojo\portfolio\django\djangopy3env\lib\site-packages (from Django>=2.2->django-filter) (2020.1)
+Installing collected packages: django-filter
+Successfully installed django-filter-2.3.0

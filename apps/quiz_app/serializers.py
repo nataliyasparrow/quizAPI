@@ -7,6 +7,7 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
     # quizes = serializers.HyperlinkedRelatedField(many=True, view_name='quiz-detail', read_only=True)
     class Meta:
         model = Category
+        # exclude = ['id']
         fields = ['id', 'title']
 
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,11 +22,11 @@ class QuizSerializer(serializers.HyperlinkedModelSerializer):
     # id = serializers.IntegerField(read_only=True)
     # title = serializers.CharField(required=True, max_length=100)
     category = serializers.ReadOnlyField(source='category.title')
+    # category = CategorySerializer(read_only=True)
     # questions = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     questions = QuestionSerializer(many=True, read_only=True)
     class Meta:
         model = Quiz
         fields = ['id', 'title', 'category', 'timed', 'questions']
-
 
 
