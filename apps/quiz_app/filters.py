@@ -6,3 +6,8 @@ class QuizFilter(filters.FilterSet):
     class Meta:
         model = Quiz
         fields = ['category__title']
+
+class QuestionFilter(filters.FilterSet):
+    class Meta:
+        model = Question
+        fields = ['category__title']

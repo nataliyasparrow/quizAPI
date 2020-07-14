@@ -12,16 +12,19 @@ from rest_framework import status
 # from django_filters.rest_framework import DjangoFilterBackend
 # from django_filters import rest_framework as filters
 from .custom_pagination import CustomPaginator
-from .filters import QuizFilter
+from .filters import QuizFilter, QuestionFilter
 
 ###### Category #######
 
 class CategoryList(APIView):
+    paginator = CustomPaginator()
     # List of all categories
     def get(self, request, format=None):
         categories = Category.objects.all()
-        sr = CategorySerializer(categories, many=True)
-        return Response(sr.data)
+        # sr = CategorySerializer(categories, many=True)
+        # return Response(sr.data)
+        response = self.paginator.generate_response(categories, CategorySerializer, request)
+        return response
 
     # Create new category
     def post(self, request, format=None):
@@ -63,10 +66,14 @@ class CategoryDetail(APIView):
 
 class QuestionList(APIView):
     # List of all questions
+    paginator = CustomPaginator()
     def get(self, request, format=None):
-        quiestions = Question.objects.all()
-        sr = QuestionSerializer(quiestions, many=True)
-        return Response(sr.data)
+        filtered_questions = QuestionFilter(request.GET, queryset = Question.objects.all()).qs
+        # questions = Question.objects.all()
+        # sr = QuestionSerializer(quiestions, many=True)
+        # return Response(sr.data)
+        response = self.paginator.generate_response(filtered_questions, QuestionSerializer, request)
+        return response
 
     # Create new question
     def post(self, request, format=None):
