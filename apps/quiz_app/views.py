@@ -21,10 +21,10 @@ class CategoryList(APIView):
     # List of all categories
     def get(self, request, format=None):
         categories = Category.objects.all()
-        # sr = CategorySerializer(categories, many=True)
-        # return Response(sr.data)
-        response = self.paginator.generate_response(categories, CategorySerializer, request)
-        return response
+        sr = CategorySerializer(categories, many=True)
+        return Response(sr.data)
+        # response = self.paginator.generate_response(categories, CategorySerializer, request)
+        # return response
 
     # Create new category
     def post(self, request, format=None):

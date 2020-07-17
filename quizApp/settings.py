@@ -33,8 +33,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # 'apps.login_app',
     'apps.quiz_app',
+    'apps.frontend',
     'rest_framework',
     'django_filters',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -97,6 +99,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': ['rest_framework.pagination.PageNumberPagination'],
     'PAGE_SIZE': 10,
 }
+
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000/'
+# ]
 
 
 # Password validation
