@@ -1,3 +1,3 @@
-Student project for learning Django REST API module + React  
-- [x] API
-- [ ] React Frontend
+Student project (Django, Django REST API module, React)
+
+Web App for creating and taking quizes. 
