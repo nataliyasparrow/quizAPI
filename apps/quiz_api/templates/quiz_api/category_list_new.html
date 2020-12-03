@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Everithing{% endblock %}
+{% block content %}
+<div class="category-list">
+  {% for c in categories %}
+  <div class="category">
+    <h3>{{ c.title }}</h3>
+    <p>
+      <a href="{% url 'show-category' c.id %}">Details</a>
+    </p>
+  </div>
+  {% endfor %}
+</div>
+<!-- <div class="category-list">
+    {% for q in questions %}
+    <div class="category">
+      <h4>{{ q.id }}</h4>
+    </div>
+    {% endfor %}
+  </div> -->
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<div class="category-list">
+  {% for c in categories %}
+  <div class="category">
+    <h3>{{ c.title }}</h3>
+    <p>
+      <a href="{% url 'show-category' c.id %}">Details</a>
+    </p>
+  </div>
+  {% endfor %}
+  {% for q in questions %}
+  <div class="category">
+    <h3>{{ q.content.question }}</h3>
+    {% for a in q.content.answers %}
+    <h5> {{ a }} </h5>
+    {% endfor %}
+    <!-- <p>
+      <a href="{% url 'show-category' q.id %}">Details</a>
+    </p> -->
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
