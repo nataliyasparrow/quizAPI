@@ -135,6 +135,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+# FRONTEND_ROOT = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend', 'main.js'))
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
