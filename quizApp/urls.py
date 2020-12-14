@@ -2,12 +2,21 @@ from django.conf import settings
 from django.conf.urls.static import static, serve
 from django.contrib import admin
 from django.urls import path, re_path, include
+from rest_framework.routers import DefaultRouter
 
 import apps.quiz_api.views
 import apps.quiz_api.api_views
 
+router = DefaultRouter()
+router.register(r'categories', apps.quiz_api.views.CategoryViewSet)
+router.register(r'questions', apps.quiz_api.views.QuestionViewSet)
+router.register(r'quizes', apps.quiz_api.views.QuizViewSet)
+
+
 urlpatterns = [
     path('', include('apps.frontend.urls')),
+
+    re_path(r'^api/v2/', include(router.urls)),
 
     path('api/v1/categories', apps.quiz_api.api_views.CategoryList.as_view()),
     path('api/v1/categories/new', apps.quiz_api.api_views.CategoryCreate.as_view()),

@@ -19,7 +19,7 @@ export default function QuizesListByCategory(props){
   const [data, setData] = useState(null);
   const { category_id } = props.match.params;
   useEffect(() => {
-    fetch(`/api/v1/quizes?category=${category_id}`)
+    fetch(`/api/v2/quizes?category=${category_id}`)
       .then(res => res.json())
       .then(setData)
       .catch(console.error);

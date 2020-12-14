@@ -6,4 +6,6 @@
 .App-link {
     color: grey;
     font-size: small;
+    margin: 5px;
+    flex: auto;
 }

@@ -80,7 +80,7 @@ export default  function ShowQuizById(props){
     // const quiz_id = {quiz_id}
   
     useEffect(() => {
-      fetch(`/api/v1/quizes/${quiz_id}`)
+      fetch(`/api/v2/quizes/${quiz_id}`)
       .then(res => res.json())
       .then(setData)
       .catch(console.error);
