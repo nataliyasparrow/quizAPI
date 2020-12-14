@@ -18,6 +18,7 @@ const [input_data, setInputData] = useState({"title":"", "description":""});
 const [status, setStatus] = useState(false);
 
 async function postCategory(input_data) {
+    // console.log("Post input data", input_data);
     return new Promise((resolve, reject) => {
         axios.post('/api/v2/categories/', input_data).then((response) => {
           resolve(response.data);
@@ -37,9 +38,9 @@ const handleChange = e => {
 
 const handleSubmit = e => {
     e.preventDefault();
+    postCategory(input_data).
     then(setStatus(true)).
     catch(console.error); 
-    console.log("Status 2:", status);
 }
 
 return (
