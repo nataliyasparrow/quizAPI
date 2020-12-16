@@ -11,14 +11,14 @@ import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-// import ToggleButton from "react-bootstrap/ToggleButton";
-// import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import axios from 'axios';
 
 import QuizesListByCategory from './QuizesListByCategory';
 import ShowQuizById from './ShowQuizById';
 import CreateCategoryForm from './CreateCategoryForm';
-import axios from 'axios';
-
+import CreateQuizForm from './CreateQuizForm';
+import NextButton from './NextButton';
+import CreateQuestionForm from './CreateQuestionForm';
 
 // const dummy_list = [
 //   { id: "1", title: "Math", description: "Math category" },
@@ -284,7 +284,9 @@ function AppNavigation() {
       <Nav className="justify-content-around">
         <Link className="App-link" to="/">Home</Link>
         <Link className="App-link" to="/">Take Quiz</Link>
-        <Link className="App-link" to="/new_category">Create Quiz</Link>
+        <Link className="App-link" to="/new_category">Create Category</Link>
+        <Link className="App-link" to="/new_question">Create Question</Link>
+        <Link className="App-link" to="/new_quiz">Create Quiz</Link>
       </Nav>
     </Navbar>
   );
@@ -314,6 +316,8 @@ function App() {
       <Route path="/quizes_by_cat/:category_id" component={QuizesListByCategory} />
       <Route path="/quizes/:quiz_id" component={ShowQuizById} />
       <Route path="/new_category" component={CreateCategoryForm} />
+      <Route path="/new_quiz" component={CreateQuizForm} />
+      <Route path="/new_question" component={CreateQuestionForm} />
     </BrowserRouter>
   );
 }

@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Category, Question, Quiz
 from .serializers import CategorySerializer,  QuestionSerializer,  QuizSerializer
 from django_filters.rest_framework import DjangoFilterBackend
@@ -40,3 +41,4 @@ class QuizViewSet(viewsets.ModelViewSet):
     filter_fields = ('id', 'category')
     search_fields = ('title')
     pagination_class = QuizPagination
+

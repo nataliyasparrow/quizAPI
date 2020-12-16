@@ -25,13 +25,13 @@ urlpatterns = [
         ),
 
     path('api/v1/questions', apps.quiz_api.api_views.QuestionList.as_view()),
-    # path('api/v1/questions/new', apps.quiz_api.api_views.QuestionCreate.as_view()),
+    path('api/v1/questions/new', apps.quiz_api.api_views.QuestionCreate.as_view()),
     path('api/v1/questions/<int:id>/',
             apps.quiz_api.api_views.QuestionRetrieveUpdateDestroy.as_view()
         ),
 
     path('api/v1/quizes', apps.quiz_api.api_views.QuizList.as_view()),
-    # path('api/v1/quizes/new', apps.quiz_api.api_views.QuizCreate.as_view()),
+    path('api/v1/quizes/new', apps.quiz_api.api_views.QuizCreate.as_view()),
     path('api/v1/quizes/<int:id>/',
             apps.quiz_api.api_views.QuizRetrieveUpdateDestroy.as_view()
         ),

@@ -4,13 +4,14 @@ import ReactDOM from 'react-dom';
 import Container from 'react-bootstrap/Container';
 import Col from "react-bootstrap/Col";
 
-function QuizItem({title, route}) {
+function QuizItem({title, route, description}) {
   
   return(
   <section>
       <Link className="App-link" to={route}>
         <h5>{title}</h5>
       </Link>
+      <p>{description}</p>
   </section>
   );
 }
@@ -35,7 +36,7 @@ export default function QuizesListByCategory(props){
             <QuizItem key = {item.id}
                   route = {`/quizes/${item.id}`}
                   title = {item.title}
-                  // description = {item.description}
+                  description = {item.description}
             />
             ))}
           </Col>) : 

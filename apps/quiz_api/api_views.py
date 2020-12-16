@@ -76,7 +76,7 @@ class QuestionList(ListAPIView):
     search_fields = ()
     pagination_class = QuestionPagination
 
-# class QuestionCreate(CreateAPIView):
+class QuestionCreate(CreateAPIView):
     serializer_class = QuestionSerializer
 
     def create(self, request, *args, **kwargs):
@@ -131,20 +131,26 @@ class QuizList(ListAPIView):
     search_fields = ()
     pagination_class = QuizPagination
 
-# class QuizCreate(CreateAPIView):
+class QuizCreate(CreateAPIView):
     serializer_class = QuizSerializer
 
     def create(self, request, *args, **kwargs):
         try:
             title = request.data.get('title')
-            if title is not None and title == "":
-                raise ValidationError({ 'title': 'Must be not empty' })
+            # if title is not None and title == "":
+            #     raise ValidationError({ 'title': 'Must be not empty' })
         except ValueError:
             raise ValidationError({ 'title': 'A valid string is required' })
         try:
+            category = request.data.get('category')
+            # if category is not None:
+            #     raise ValidationError({ 'category': 'Must be not empty' })
+        except ValueError:
+            raise ValidationError({ 'category': 'A valid category id is required' })
+        try:
             description = request.data.get('description')
-            if description is not None and description == "":
-                raise ValidationError({ 'description': 'Must be not empty' })
+            # if description is not None and description == "":
+            #     raise ValidationError({ 'description': 'Must be not empty' })
         except ValueError:
             raise ValidationError({ 'description': 'A valid string is required' })
         return super().create(request, *args, **kwargs)
@@ -155,7 +161,7 @@ class QuizRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = QuizSerializer
 
     def delete(self, request, *args, **kwargs):
-        category_id = request.data.get('id')
+        quiz_id = request.data.get('id')
         response = super().delete(request, *args, **kwargs)
         if response.status_code == 204:
             from django.core.cache import cache
