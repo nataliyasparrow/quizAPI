@@ -13,51 +13,6 @@ import FormLabel from "react-bootstrap/FormLabel";
 import axios from 'axios';
 import CreateNewQuestion from './CreateQuestionForm';
 
-// function SelectCategory(props) {
-//     const [categories, setCategoriesList] = useState(null)
-
-//     const getCategories = async () => {
-//         try {
-//         const categoriesList = await axios.get(`api/v2/categories`)
-//         setCategoriesList(categoriesList.data);
-
-//         } catch (err) {
-//         console.error(err.message);
-//         }
-//     };
-
-//     useEffect(() => {
-//         getCategories();
-//         console.log(categories);
-//     }, [])
-
-
-//     const handleChange = () => (e, value) => {
-//         let data = { ...props.value };
-//         data["categories"] = value;
-//         props.onChange(null, data);
-//       }
-//     if(categories && categories.count > 0) {
-//     <Form.Group controlId="QuizCategorySelect">
-//         <Form.Label>Select category</Form.Label>
-//         <Form.Control as="select" name="category" value={props.value} onChange={handleChange}>
-//             {categories.results.map(item => (
-//                 <option key={item.id} value={item.id}>
-//                     {item.title}
-//                 </option>
-//             ))}
-//             </Form.Control>
-//     </Form.Group>
-//     }
-//     return (
-//         <Container>
-//         <Col>
-//             <h3>Loading...</h3>
-//         </Col>
-//     </Container>
-//     );
-// }
-
 export default function CreateNewQuiz() {
 const [categories, setCategories] = useState(null)
 const [quiz, setQuiz] = useState(null)
@@ -71,22 +26,6 @@ useEffect(() => {
 
 const [input_data, setInputData] = useState({"title":"", "description":"", "category": 0, "questions": []});
 const [status, setStatus] = useState(false);
-// const [quiz, setQuiz] = useState(null);
-
-//   const getCategories = async () => {
-//     try {
-//       const categoriesList = await axios.get(`api/v2/categories`)
-//       setCategoriesList(categoriesList.data);
-
-//     } catch (err) {
-//       console.error(err.message);
-//     }
-//   };
-
-//   useEffect(() => {
-//     getCategories();
-
-//   }, [])
 
 async function postQuiz(input_data) {
     // console.log("Post input data", input_data);
@@ -145,25 +84,16 @@ return (
     <Container>
         { status ?
         <Col>
-            <h3>Success!</h3>
             {quiz ? 
             <>
-                <p>New quiz has been created. Quiz id: {quiz.id} Category id:{quiz.category.id}</p>
+                <h4>{quiz.title}</h4>
                 <CreateNewQuestion quiz_id={quiz.id} category_id={quiz.category.id}/>
             </>
              : <p>Can't show new quiz</p>}
-            {/* <Redirect to='/new_question'/> */}
-            {/* <h4>Add questions to the quiz</h4> */}
-            {/* <h4>New quiz has been created</h4>
-            
-                Quiz id: {quiz} */}
-            
-            {/* <CreateNewQuestion /> */}
         </Col> :
         <Col>
             <h4>Create new quiz</h4>
             <Form onSubmit={handleSubmit}>
-            {/* <SelectCategory name="category" value={input_data.category} onChange={handleChangeSelect}/> */}
             <Form.Group controlId="QuizCategorySelect">
                 <Form.Label>Select category</Form.Label>
                 <Form.Control as="select" name="category" value={input_data.category} onChange={handleChange}>
@@ -183,16 +113,6 @@ return (
                 <FormLabel>Description</FormLabel>
                 <FormControl as="textarea" value={input_data.description} name="description" rows={5} placeholder="Description" onChange={handleChange} required/>
             </FormGroup>
-            {/* <Form.Group controlId="QuizCategorySelect">
-            <Form.Label>Select category</Form.Label>
-            <Form.Control as="select" name="category" value={input_data.category} onChange={handleChange}>
-                {categories.results.map(item => (
-                    <option key={item.id} value={item.id}>
-                        {item.title}
-                    </option>
-                ))}
-                </Form.Control>
-            </Form.Group> */}
             <Button variant="secondary" type="submit" size="sm">Submit</Button>
             </Form>
         </Col>

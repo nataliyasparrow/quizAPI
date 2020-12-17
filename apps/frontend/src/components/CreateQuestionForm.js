@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormControl from "react-bootstrap/FormControl";
 import FormLabel from "react-bootstrap/FormLabel";
+import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 
 export default function CreateNewQuestion(props) {
@@ -56,6 +57,12 @@ const handleChange = e => {
 
 }
 
+const handleChangeRadio = (e) => {
+    let c = input_data.content;
+    c.correct_answer[0] = e.target.value;
+    setInputData((input_data) => ({...input_data, ["content"]: c}))
+}
+
 const handleSubmit = e => {
     e.preventDefault();
     postQuestion(input_data).
@@ -92,7 +99,7 @@ return (
     <Container>
         { status ?
         <Col>
-            <h3>Question has been added.</h3>
+            <h5>Question has been added.</h5>
             <h5>Add more?</h5>
             <Row>
                 <Button className="App-button" variant="secondary" onClick={handleYes} size="sm">Yes!</Button>
@@ -108,18 +115,39 @@ return (
                 <FormControl as="textarea" value={input_data.content.question} name="question" rows={5} placeholder="Type question here" onChange={handleChange} required/>
             </FormGroup>
             <>
+            <Table borderless variant="light">
+                <thead>
+                    <tr>
+                        <th>Correct</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
                 {input_data.content.answers.map((item, index) =>
-                    <Col key={index}>
-                        <FormLabel>Answer {index + 1}</FormLabel>
-                        <FormControl as="textarea" value={item} onChange={handleChangeAnswer(index)} rows={3} placeholder="Type answer here" required/>
-                    </Col>
+                    <tr key={index}>
+                        <td className="align-middle">
+                        <Form.Check 
+                            type="radio"
+                            name="answers_radio"
+                            key = {index}
+                            label = {index + 1}
+                            value = {index}
+                            onChange = {handleChangeRadio}
+                            />
+                        </td>
+                        <td>
+                            <FormLabel>Answer {index + 1}</FormLabel>
+                            <FormControl as="textarea" value={item} onChange={handleChangeAnswer(index)} rows={3} placeholder="Type answer here" required/>
+                        </td>
+                    </tr>       
                 )}
-                <Button className="App-button" variant="outline-secondary" size="sm" onClick={handleAddAnswer}>Add answer</Button>
-
-                {/* <Button className="App-button" variant="outline-secondary" size="sm" onClick={handleEnough}>Enough!</Button> */}
-
+                </tbody>
+            </Table>
             </>
-                <Button className="App-button" variant="secondary" type="submit" size="md">Submit</Button>
+            <Row className="justify-content-between">
+                <Button className="App-button" variant="outline-secondary" size="sm" onClick={handleAddAnswer}>Add answer</Button>
+                <Button className="App-button align-right" variant="secondary" type="submit" size="md">Submit</Button>
+            </Row>
             </Form>
         </Col>
         }
