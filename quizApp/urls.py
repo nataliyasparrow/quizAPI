@@ -21,7 +21,7 @@ urlpatterns = [
     path('api/v1/categories', apps.quiz_api.api_views.CategoryList.as_view()),
     path('api/v1/categories/new', apps.quiz_api.api_views.CategoryCreate.as_view()),
     path('api/v1/categories/<int:id>/',
-            apps.quiz_api.api_views.ProductRetrieveUpdateDestroy.as_view()
+            apps.quiz_api.api_views.CategoryRetrieveUpdateDestroy.as_view()
         ),
 
     path('api/v1/questions', apps.quiz_api.api_views.QuestionList.as_view()),

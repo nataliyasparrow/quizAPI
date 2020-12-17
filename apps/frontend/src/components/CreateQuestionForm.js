@@ -13,8 +13,11 @@ import FormLabel from "react-bootstrap/FormLabel";
 import axios from 'axios';
 
 export default function CreateNewQuestion(props) {
-const quiz_id = 3;
-const category_id = 3;
+const quiz_id = props.quiz_id;
+const category_id = props.category_id;
+
+// const quiz_id = 1;
+// const category_id = 1;
 // const { quiz_id } = props.match.params;
 
 // useEffect(() => {
@@ -23,9 +26,10 @@ const category_id = 3;
 //     .then(setCategories)
 //     .catch(console.error);
 //   }, []);
-
-const [input_data, setInputData] = useState({"quiz": quiz_id, "category": category_id, "content": {"question": "", "answers": ["ans1", "ans2"], "correct_answer": [1]}});
+const initial_data = {"quiz": quiz_id, "category": category_id, "content": {"question": "", "answers": ["", ""], "correct_answer": [1]}};
+const [input_data, setInputData] = useState(initial_data);
 const [status, setStatus] = useState(false);
+const [finish, setFinish] = useState(false);
 
 async function postQuestion(input_data) {
     console.log("Post input data", input_data);
@@ -59,11 +63,41 @@ const handleSubmit = e => {
     catch(console.error); 
     console.log("Submitting data: ", input_data);
 }
+
+const handleYes = e => {
+    e.preventDefault();
+    setInputData(initial_data);
+    setStatus(false);
+    console.log("Add more");
+}
+
+const handleNo = e => {
+    e.preventDefault();
+    console.log("Quit");
+    setFinish(true);
+}
+
+const handleAddAnswer = e => {
+    e.preventDefault();
+    let a = input_data.content;
+    a.answers.push("");
+    setInputData({...input_data, ["content"]: a});
+}
+
+if (finish) {
+    return <Redirect to='/'/>
+}
+
 return (
     <Container>
         { status ?
         <Col>
-            <h3>Success!</h3>
+            <h3>Question has been added.</h3>
+            <h5>Add more?</h5>
+            <Row>
+                <Button className="App-button" variant="secondary" onClick={handleYes} size="sm">Yes!</Button>
+                <Button className="App-button" variant="secondary" onClick={handleNo} size="sm">No, thanks!</Button>
+            </Row>
             {/* <Redirect to='/'/> */}
         </Col> :
         <Col>
@@ -77,11 +111,15 @@ return (
                 {input_data.content.answers.map((item, index) =>
                     <Col key={index}>
                         <FormLabel>Answer {index + 1}</FormLabel>
-                        <FormControl as="textarea" value={item} onChange={handleChangeAnswer(index)} rows={3} placeholder="Type answer here"/>
+                        <FormControl as="textarea" value={item} onChange={handleChangeAnswer(index)} rows={3} placeholder="Type answer here" required/>
                     </Col>
                 )}
+                <Button className="App-button" variant="outline-secondary" size="sm" onClick={handleAddAnswer}>Add answer</Button>
+
+                {/* <Button className="App-button" variant="outline-secondary" size="sm" onClick={handleEnough}>Enough!</Button> */}
+
             </>
-            <Button className="App-button" variant="secondary" type="submit" size="sm">Submit</Button>
+                <Button className="App-button" variant="secondary" type="submit" size="md">Submit</Button>
             </Form>
         </Col>
         }

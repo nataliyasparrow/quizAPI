@@ -38,7 +38,7 @@ class CategoryCreate(CreateAPIView):
             raise ValidationError({ 'description': 'A valid string is required' })
         return super().create(request, *args, **kwargs)
 
-class ProductRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+class CategoryRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     lookup_field = 'id'
     serializer_class = CategorySerializer

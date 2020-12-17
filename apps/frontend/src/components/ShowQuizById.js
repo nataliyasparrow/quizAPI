@@ -144,10 +144,10 @@ function QuestionItem({question}){
 // }
 
 function QuestionsOneByOne({q_ids}){
+    const id = q_ids[0];
     const count = q_ids.length;
     const [idx, setIdx] = useState(0);
     const [data, setData] = useState(null);
-    const id = q_ids[idx];
 
     const [value, setValue] = useState(0);
     const [score, setScore] = useState(0);
@@ -170,6 +170,7 @@ function QuestionsOneByOne({q_ids}){
     // }, [])
 
     const getData = async (id) => {
+        console.log("Get data, id: ", id);
         fetch(`/api/v2/questions/${id}`)
             .then(res => res.json())
             .then(setData)
@@ -177,7 +178,7 @@ function QuestionsOneByOne({q_ids}){
     }
     useEffect(() => {
         getData(id);
-    }, []);
+    }, [idx]);
 
     const handleChange = e => {
         setValue(e.target.value);
@@ -186,9 +187,11 @@ function QuestionsOneByOne({q_ids}){
       
       const handleSubmit = e => {
         e.preventDefault();
-        if (value === +correct) setScore(score + 1);
+        if (value == correct) setScore(score + 1);
+        console.log("Score: ", score);
         setIdx(idx + 1);
-        getData(q_ids[idx]);
+        console.log("Submit, idx, id: ", idx, id);
+        // getData(q_ids[idx]);
         console.log("Submit, new data: ", data);
       };
 
@@ -197,7 +200,8 @@ function QuestionsOneByOne({q_ids}){
         <Row>
         {idx < count ? (        
             <Col>
-                <h5>{idx}. {data.content.question}</h5>
+                <h5>{idx + 1} / {count}. {data.content.question}</h5>
+                <p>Current score: {score}</p>
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         {data.content.answers.map((ans, i) => (

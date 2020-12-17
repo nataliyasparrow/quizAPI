@@ -27,7 +27,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('id', )
-    search_fields = ()
+    search_fields = ('content')
     pagination_class = QuestionPagination
 
 class QuizPagination(LimitOffsetPagination):
@@ -39,6 +39,6 @@ class QuizViewSet(viewsets.ModelViewSet):
     serializer_class = QuizSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('id', 'category')
-    search_fields = ('title')
+    search_fields = ('title', 'description')
     pagination_class = QuizPagination
 
