@@ -64,17 +64,15 @@ function ShowCategoriesList() {
   }, [])
 
   if (categories.count > 0) {
-    return (
-      <Container>
-        <Col>
+    return (  
+      <Col xs={6}>
           {categories.results.map(item => (
             <CategoryItem key={item.id}
               route={`/quizes_by_cat/${item.id}`}
               title={item.title}
               description={item.description} />
           ))}
-        </Col>
-      </Container>
+      </Col>
     );
   }
   return (
@@ -105,14 +103,10 @@ function Home() {
   return (
     <Container>
       {/* <h4>Welcome to Quiz App!</h4> */}
-      <Row>
         <Col>
           <h5>Please select quiz category:</h5>
         </Col>
         <ShowCategoriesList />
-        <Col>
-        </Col>
-      </Row>
     </Container>
   );
 }

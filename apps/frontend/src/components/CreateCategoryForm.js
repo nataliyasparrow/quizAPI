@@ -46,11 +46,11 @@ const handleSubmit = e => {
 return (
 <Container>
     { status ?
-    <Col>
+    <Col xs={6}>
         {/* <h3>Success!</h3> */}
         <Redirect to='/'/>
     </Col> :
-    <Col>
+    <Col xs={6}>
         <h4>Create new category</h4>
         <Form onSubmit={handleSubmit}>
         <FormGroup controlId="CategoryTitleField">

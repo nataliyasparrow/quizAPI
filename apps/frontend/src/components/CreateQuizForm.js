@@ -83,7 +83,7 @@ if(categories){
 return (
     <Container>
         { status ?
-        <Col>
+        <Col xs={6}>
             {quiz ? 
             <>
                 <h4>{quiz.title}</h4>
@@ -91,7 +91,7 @@ return (
             </>
              : <p>Can't show new quiz</p>}
         </Col> :
-        <Col>
+        <Col xs={6}>
             <h4>Create new quiz</h4>
             <Form onSubmit={handleSubmit}>
             <Form.Group controlId="QuizCategorySelect">

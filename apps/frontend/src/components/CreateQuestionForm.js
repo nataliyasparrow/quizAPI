@@ -98,10 +98,10 @@ if (finish) {
 return (
     <Container>
         { status ?
-        <Col>
-            <h5>Question has been added.</h5>
-            <h5>Add more?</h5>
-            <Row>
+        <Col className="justify-content-between">
+            <p>Question has been added.</p>
+            <p>Add more?</p>
+            <Row >
                 <Button className="App-button" variant="secondary" onClick={handleYes} size="sm">Yes!</Button>
                 <Button className="App-button" variant="secondary" onClick={handleNo} size="sm">No, thanks!</Button>
             </Row>
@@ -111,10 +111,11 @@ return (
             <h4>Add question</h4>
             <Form onSubmit={handleSubmit}>
             <FormGroup controlId="QuestionTextField">
-                <FormLabel>Question text</FormLabel>
+                <FormLabel>Question</FormLabel>
                 <FormControl as="textarea" value={input_data.content.question} name="question" rows={5} placeholder="Type question here" onChange={handleChange} required/>
             </FormGroup>
             <>
+            <h5>Answers</h5>
             <Table borderless variant="light">
                 <thead>
                     <tr>
@@ -133,6 +134,7 @@ return (
                             label = {index + 1}
                             value = {index}
                             onChange = {handleChangeRadio}
+                            required
                             />
                         </td>
                         <td>

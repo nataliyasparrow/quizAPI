@@ -10,141 +10,17 @@ import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import axios from 'axios';
 
-
-
-// function QuestionsOneByOne({questions}){
-//     const [value, setValue] = useState(0);
-//     const [score, setScore] = useState(0);
-//     const [correct, setCorrect] = useState(-100);
-//     const data = questions;
-//     const count = data.length;
-  
-//     const [idx, setIdx] = useState(0);
-//     const currentQuestion = data[idx];
-  
-  
-//     const handleChange = e => {
-//       setValue(e.target.value);
-//       setCorrect(currentQuestion.content.correct_answer[0]);
-//     }
-    
-//     const handleSubmit = e => {
-//       e.preventDefault();
-//       if (idx === +correct) setScore(score+1);
-//       setIdx(idx + 1);
-//     };
-  
-//     return (
-//       <Row>
-//         {idx < count ? (
-//         <Col>
-//           <h5>{idx + 1}. {currentQuestion.content.question}</h5>
-//           <Form onSubmit={handleSubmit}>
-//             <FormGroup>
-//               {currentQuestion.content.answers.map((ans, idx) => (
-//                 <Form.Check 
-//                   type="radio"
-//                   name="answers_radio"
-//                   key = {idx}
-//                   label = {ans}
-//                   value = {idx}
-//                   onChange = {handleChange}
-//                 />
-//               ))}
-//             </FormGroup>
-//             <Button type="submit" variant="secondary" size="sm" >Next</Button>
-//           </Form>
-//         </Col> ) : 
-//         (<Col>
-//           <h5>Your score: {score} / {count} </h5>
-//           <Link className="App-link" to='/'>Go Home</Link>
-//         </Col>)}
-//         {/* <Col>
-//         <h5>Current score: {score}</h5>
-//         <p>Current index: {idx}</p>
-//         <p>Current correct: {correct}</p>
-  
-//       </Col> */}
-//     </Row>
-//     );
-//   }
-
-// function QuestionById({question_id}){
-//     const [data, setData] = useState(null);
-
-    // useEffect(() => {
-    // fetch(`/api/v2/questions/${question_id}`)
-    //     .then(res => res.json())
-    //     .then(setData)
-    //     .catch(console.error);
-    // }, []);
-    
-//     if (data) {
+// function QuestionItem({question}){
 //     return (
 //         <div>
-//         <h3>Show Question component, question_id id:{question_id}</h3>
-//         <p>Data: {JSON.stringify(data)}</p>
+//         <h3>Show Question Item, id:{question.id}</h3>
+//         <p>Data: {JSON.stringify(question)}</p>
 //         </div>
 //     );
-//     }
-//     return (
-//     <h3>No data available</h3>
-//     );
 // }
 
-function QuestionItem({question}){
-    return (
-        <div>
-        <h3>Show Question Item, id:{question.id}</h3>
-        <p>Data: {JSON.stringify(question)}</p>
-        </div>
-    );
-}
-
-// function ShowQuestionsOneByOne({q_ids}){
-//     const count = q_ids.length;
-//     const [idx, setIdx] = useState(0);
-//     const [data, setData] = useState(null);
-//     const id = q_ids[0];
-    
-//     const getData = async (id) => {
-//     try {
-//       const question = await axios.get(`/api/v2/questions/${id}`)
-//       setData(question.data);
-
-//     } catch (err) {
-//       console.error(err.message);
-//     }
-//   };
-
-//     useEffect(() => {
-//        getData(id);
-//     }, [])
-
-//     if (data) {
-//     return (
-//         <Row>
-//         {idx < count ? (        
-//             <Col>
-//                 <QuestionItem question={data}/>
-//                 <Button variant="secondary" size="sm" onClick={() => {setIdx(idx + 1); getData(q_ids[idx])}} >Next</Button>
-//             </Col>) :
-//         (<Col>
-//             <h3>End of game</h3>
-//         </Col>)}
-//         </Row>
-//     );
-//   }
-//   return (
-//     <Container>
-//       <Col>
-//         <p>Loading...</p>
-//       </Col>
-//     </Container>);
-// }
 
 function QuestionsOneByOne({q_ids}){
-    const id = q_ids[0];
     const count = q_ids.length;
     const [idx, setIdx] = useState(0);
     const [data, setData] = useState(null);
@@ -153,7 +29,7 @@ function QuestionsOneByOne({q_ids}){
     const [score, setScore] = useState(0);
     const [correct, setCorrect] = useState(-100);
 
-    //Axios version og data retrive
+    //Axios version og data retrieve
     // const getData = async (id) => {
     //     try {
     //     const question = await axios.get(`/api/v2/questions/${id}`)
@@ -176,8 +52,11 @@ function QuestionsOneByOne({q_ids}){
             .then(setData)
             .catch(console.error);
     }
+
     useEffect(() => {
-        getData(id);
+        if (idx < count) {
+            getData(q_ids[idx]);
+        }
     }, [idx]);
 
     const handleChange = e => {
@@ -188,11 +67,7 @@ function QuestionsOneByOne({q_ids}){
       const handleSubmit = e => {
         e.preventDefault();
         if (value == correct) setScore(score + 1);
-        console.log("Score: ", score);
         setIdx(idx + 1);
-        console.log("Submit, idx, id: ", idx, id);
-        // getData(q_ids[idx]);
-        console.log("Submit, new data: ", data);
       };
 
     if (data) {
@@ -200,8 +75,11 @@ function QuestionsOneByOne({q_ids}){
         <Row>
         {idx < count ? (        
             <Col>
-                <h5>{idx + 1} / {count}. {data.content.question}</h5>
-                <p>Current score: {score}</p>
+                <Row className="justify-content-between">
+                    <h5>{data.content.question}</h5>
+                    <h5>{idx + 1} / {count}</h5>
+                </Row>
+                {/* <p>Current score: {score}</p> */}
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         {data.content.answers.map((ans, i) => (
@@ -217,11 +95,8 @@ function QuestionsOneByOne({q_ids}){
                     </FormGroup>
                     <Button type="submit" variant="secondary" size="sm" >Next</Button>
                 </Form>
-                {/* <QuestionItem question={data}/>
-                <Button variant="secondary" size="sm" onClick={() => {setIdx(idx + 1); getData(q_ids[idx])}} >Next</Button> */}
             </Col>) :
         (<Col>
-            <h3>End of game</h3>
             <h5>Your score: {score} / {count} </h5>
             <Link className="App-link" to='/'>Go Home</Link>
         </Col>)}
@@ -247,13 +122,21 @@ function QuestionsOneByOne({q_ids}){
       .then(setData)
       .catch(console.error);
     }, []);
+
+    // useEffect(() => {
+    //     fetch(`/api/v2/questions/${id}`)
+    //         .then(res => res.json())
+    //         .then(setData)
+    //         .catch(console.error);
+    // }, [idx]);
   
     if (data) {
       return(
         <Container>
-          <h4>{data.title}</h4>
-          <p>Category: {data.category.title}</p>
-          <QuestionsOneByOne q_ids={data.questions}/>
+            <Col xs={6}>
+                <h5>{data.title}</h5>
+                <QuestionsOneByOne q_ids={data.questions}/>
+            </Col>
         </Container>
       );
     }  
